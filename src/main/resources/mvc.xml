@@ -13,6 +13,8 @@
 
     <!--引入其他配置文件-->
     <import resource="applicationContext.xml"/>
+    <import resource="spring-mail.xml"/>
+    <import resource="spring-redis.xml"/>
 
     <!--配置注解驱动-->
     <mvc:annotation-driven/>
@@ -26,7 +28,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="cn.wolfcode.rbac.Interceptor.LoginInterceptor" />
+            <bean class="com.rbac.Interceptor.LoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 

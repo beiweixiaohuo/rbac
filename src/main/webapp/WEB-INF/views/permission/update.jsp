@@ -41,91 +41,95 @@
 </script>
 <body>
 
-<div class="container " style="margin-top: 20px">
+<div id="wrapper">
+
     <%@include file="../common/top.jsp" %>
-    <div class="row">
-        <div class="col-sm-3">
-            <c:set var="menu" value="permission"/>
-            <%@include file="../common/menu.jsp" %>
-        </div>
-        <div class="col-sm-9">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1 class="page-head-line">权限修改</h1>
-                </div>
-            </div>
-            <div class="row col-sm-10">
-                <form class="form-horizontal" action="/permission/save.do" method="post" id="editForm">
-                </form>
-                <div class="ty-transfer mt20 ml20" id="ued-transfer-1">
-                    <div class="fl ty-transfer-list transfer-list-left">
-                        <div class="ty-transfer-list-head">
-                            可添加权限列表
-                        </div>
-                        <div class="ty-transfer-list-body">
-                            <ul class="ty-tree-select">
-                                <form action="/permission/addRolePermission.do" method="post" id="addRolePermission">
+
+    <c:set var="menu" value="permission"/>
+    <%@include file="../common/menu.jsp" %>
+    <main>
+        <h1 style="font-size: 2em">权限修改</h1>
+        <div style="width:80%;margin:10px auto">
+            <form class="form-horizontal" action="/permission/save.do" method="post" id="editForm">
+            </form>
+            <div class="ty-transfer mt20 ml20" id="ued-transfer-1">
+                <div class="fl ty-transfer-list transfer-list-left" style="background-color: #F4F8FA">
+                    <div class="ty-transfer-list-head">
+                        可添加权限列表
+                    </div>
+                    <div class="ty-transfer-list-body">
+                        <ul class="ty-tree-select">
+                            <form action="/permission/addRolePermission.do" method="post" id="addRolePermission">
                                 <input type="hidden" value="${param.id}" name="roleId">
-                                    <c:forEach var="enableSelect" items="${enableSelects}">
+                                <c:forEach var="enableSelect" items="${enableSelects}">
                                     <li>
                                         <div>
                                             <label class="tyue-checkbox-wrapper">
-                                            <span class="tyue-checkbox">
-                                                <input type="checkbox" class="tyue-checkbox-input" name="checkbox1"
-                                                       value="${enableSelect.id}">
-                                                <span class="tyue-checkbox-circle"></span>
-                                            </span>
-                                            <span class="tyue-checkbox-txt" >
-                                                    ${enableSelect.name}
-                                            </span>
+                                                <span class="tyue-checkbox">
+                                                    <input type="checkbox" class="tyue-checkbox-input" name="checkbox1"
+                                                           value="${enableSelect.id}">
+                                                    <span class="tyue-checkbox-circle"></span>
+                                                </span>
+                                                <span class="tyue-checkbox-txt" >
+                                                        ${enableSelect.name}
+                                                </span>
                                             </label>
                                         </div>
                                     </li>
                                 </c:forEach>
-                                </form>
-                            </ul>
-                        </div>
-
+                            </form>
+                        </ul>
                     </div>
-                    <div class="fl ty-transfer-operation">
-                    <span class="ty-transfer-btn-toright to-switch" onclick="add()">
-                    </span>
-                    <span class="ty-transfer-btn-toleft to-switch" onclick="del()">
-                    </span>
-                    </div>
-                    <div class="fl ty-transfer-list transfer-list-right">
-                        <div class="ty-transfer-list-head">
-                            已拥有权限列表
-                        </div>
-                        <div class="ty-transfer-list-body">
-                            <ul class="ty-tree-select">
-                                <form action="/permission/delRolePermission.do" method="post" id="delRolePermission">
-                                    <input type="hidden" value="${param.id}" name="roleId">
-                                <c:forEach var="hasSelect" items="${hasSelects}">
-                                <li>
-                                    <div>
-                                        <label class="tyue-checkbox-wrapper">
-                                            <span class="tyue-checkbox">
-                                                <input type="checkbox" class="tyue-checkbox-input"
-                                                       value="${hasSelect.permissionId}" name="checkbox2">
-                                                <span class="tyue-checkbox-circle"></span>
-                                            </span>
-                                            <span class="tyue-checkbox-txt">
-                                                ${hasSelect.permissionName}
-                                            </span>
-                                        </label>
-                                    </div>
-                                </li>
-                                </c:forEach>
-                                </form>
-                            </ul>
-                        </div>
-                    </div>
-                            
                 </div>
+                <div class="fl ty-transfer-operation">
+                    <span class="" onclick="add()" style="font-size: 1.5em;background-color:#bbb;color: #ffffff;"> ></span>
+                    <span class="" onclick="del()" style="font-size: 1.5em;background-color:#bbb;color: #ffffff;"> < </span>
+                </div>
+<%--                <div class="fl ty-transfer-operation">--%>
+<%--                    <span class="ty-transfer-btn-toright to-switch" onclick="add()">--%>
+<%--                    </span>--%>
+<%--                    <span class="ty-transfer-btn-toleft to-switch" onclick="del()">--%>
+<%--                    </span>--%>
+<%--                </div>--%>
+                <div class="fl ty-transfer-list transfer-list-right" style="background-color: #F4F8FA">
+                    <div class="ty-transfer-list-head">
+                        已拥有权限列表
+                    </div>
+                    <div class="ty-transfer-list-body">
+                        <ul class="ty-tree-select">
+                            <form action="/permission/delRolePermission.do" method="post" id="delRolePermission">
+                                <input type="hidden" value="${param.id}" name="roleId">
+                                <c:forEach var="hasSelect" items="${hasSelects}">
+                                    <li>
+                                        <div>
+                                            <label class="tyue-checkbox-wrapper">
+                                                <span class="tyue-checkbox">
+                                                    <input type="checkbox" class="tyue-checkbox-input"
+                                                           value="${hasSelect.permissionId}" name="checkbox2">
+                                                    <span class="tyue-checkbox-circle"></span>
+                                                </span>
+                                                <span class="tyue-checkbox-txt">
+                                                        ${hasSelect.permissionName}
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </c:forEach>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+                        
             </div>
         </div>
-    </div>
+
+
+
+
+    </main>
+
+    <%@include file="../common/footer.jsp" %>
+
 </div>
 <script>
 

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/login/style.css">
 </head>
 <script src="js/jquery/jquery.min.js"></script>
+<script src="js/jquery/jquery.cookie.js"></script>
 <script src="js/supersized.3.2.7.min.js"></script>
 <script src="js/supersized-init.js"></script>
 <script>
@@ -26,18 +27,51 @@
        });
    })
 </script>
+<script>
+    $(document).ready(function(){
+        if($.cookie("password") != ''){
+            $("#password").val($.cookie("password"));
+        }
+        if($.cookie("id") != ''){
+            $("#id").val($.cookie("id"));
+        }
+    });
 
+    function check(){
+        //记住我功能使用
+        //写入cookie
+        if ($("#remember-me").prop("checked") == true) {
+            var id = $("#id").val();
+            var password = $("#password").val();
+            $.cookie("id", id);
+            $.cookie("password", password,{ expires: 7 }); // 存储一个带7天期限的 cookie 如果{ expires: 7 } 不写则cookie只相当回话效果
+        } else {
+            $.cookie("id", "");
+            $.cookie("password", "");
+        }
+    }
+</script>
 
 <body>
 
     <div class="page-container">
         <h1>Login</h1>
-        <form action="/checkLogin.do" method="post" id="loginForm">
+        <form action="/checkLogin.do" method="post" id="loginForm" onsubmit="return check()">
             <div>
-                <input type="text" name="id" class="username" id="id" placeholder="账号" autocomplete="off"/>
+                <input type="text" name="id" class="username" id="id" placeholder="账号"  autocomplete="off" onblur="GetPwdAndChk()"/>
             </div>
             <div>
                 <input type="password" name="password" id="password" class="password" placeholder="密码" />
+            </div>
+            <div class="remember clearfix">
+                <label class="remember-me"></span>记住我</label>
+                    <input type="checkbox" name="remember-me" id="remember-me" class="remember-mecheck"
+                           style="width:30px; height:30px; margin:15px 10px;" checked>
+            </div>
+            <div>
+                <label class="forgot-password">
+                    <a href="/forgetPassword.do" >忘记密码？</a>
+                </label>
             </div>
             <button id="submit" type="submit" >登录</button>
         </form>
@@ -51,4 +85,6 @@
         ${msg}
     </span>
 </body>
+
+
 </html>

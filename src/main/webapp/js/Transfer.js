@@ -14,7 +14,7 @@
                 this.switchBtn = this.el.find(".to-switch");
                 this.allCheckedBoxes = this.el.find(".tyue-checkbox-input");
                 this.alldivBoxes = this.el.find(".ty-tree-div");
-                
+
                 this.checkBoxEvent();
                 this.allCheckEvent();
                 this.switchEvent();
@@ -27,27 +27,27 @@
                 this.switchBtn.on("click",function(){
                     that.transferAllCheck.removeAttr("checked","checked");
                     var _this = $(this);
-                    
+
                     var a_tagClass = null;
                     if(_this.hasClass("ty-transfer-btn-toright")){
-                        findCheckbox = _this.parents(".ty-transfer").find(".transfer-list-left li");
-                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-right ul");
+                        findCheckbox = _this.parents(".ty-transfer").find(".transfer-list.jsp-left li");
+                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list.jsp-right ul");
                         a_tagClass = "ty-transfer-btn-toright";
                     }else{
-                        findCheckbox = _this.parents(".ty-transfer").find(".transfer-list-right li");
-                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-left ul");
+                        findCheckbox = _this.parents(".ty-transfer").find(".transfer-list.jsp-right li");
+                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list.jsp-left ul");
                         a_tagClass = "ty-transfer-btn-toleft";
                     }
-                    
+
                     var checkBox = findCheckbox.find(":checked");
                         if(checkBox != 0){
                             var arrVal = [];
                             checkBox.each(function(){
                                 $(this).removeAttr("checked");
-                                var appendText = $(this).parents(".ty-tree-div").parent("li");                         
+                                var appendText = $(this).parents(".ty-tree-div").parent("li");
                                 arrVal.push(appendText);
                                 that.removeActiveEvent(a_tagClass,"active");
-                                that.addActiveEvent(a_tagClass,"disabled");                      
+                                that.addActiveEvent(a_tagClass,"disabled");
                             });
                             inputCheckbox.prepend(arrVal);
                       }
@@ -62,12 +62,12 @@
                     clearTimeout(time);
                     time = setTimeout(function(){
                         var classNames = that.checkTagClass($(this));
-                        if($(this).is(":checked")){           
+                        if($(this).is(":checked")){
                             that.removeActiveEvent(classNames[0],"disabled");
                             that.addActiveEvent(classNames[0],"active");
                             if(!$("."+classNames[1]).hasClass("active")){
                                 that.addActiveEvent(classNames[1],"disabled");
-                             } 
+                             }
                         }else{
                             var siblingsTag = $(this).parents(".ty-tree-div").parent("li").siblings("li").find(".tyue-checkbox-input");
                             if(!siblingsTag.is(":checked")){
@@ -78,7 +78,7 @@
                         }
                     }.bind(this),200);
 
-                });     
+                });
             },
 
                //所有按钮双击事件
@@ -89,36 +89,36 @@
                     var _this = $(this);
                     $(this).removeAttr("checked");
 
-                    if(_this.parents(".ty-transfer-list").hasClass("transfer-list-left")){
-                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-right ul");
+                    if(_this.parents(".ty-transfer-list.jsp").hasClass("transfer-list.jsp-left")){
+                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list.jsp-right ul");
                         btnCheckbox = that.el.find(".ty-transfer-btn-toright");
                     }else{
-                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-left ul");
+                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list.jsp-left ul");
                         btnCheckbox = that.el.find(".ty-transfer-btn-toleft");
                     }
-        
+
                     var siblingsTag = _this.parent("li").siblings("li").find(".tyue-checkbox-input");
                     if(!siblingsTag.is(":checked")){
                         btnCheckbox.removeClass("active");
                     }
-                    
+
 
                     var appendText = _this.parent("li");
 
-                    
+
 
                     inputCheckbox.prepend(appendText);
                     appendText.find(".tyue-checkbox-input").removeAttr("checked");
-                    
+
                 });
             },
-           
+
             //全选按钮事件
             allCheckEvent : function(){
                 var that = this;
                 this.transferAllCheck.on("click",function(){
-                    var checkBoxs = $(this).parents(".ty-transfer-list-foot").siblings(".ty-transfer-list-body").find(":checkBox");
-                    
+                    var checkBoxs = $(this).parents(".ty-transfer-list.jsp-foot").siblings(".ty-transfer-list.jsp-body").find(":checkBox");
+
                     var classNames = that.checkTagClass($(this));
 
                     if($(this).prop("checked") == true){
@@ -127,7 +127,7 @@
                         that.addActiveEvent(classNames[0],"active");
                         if(!$("."+classNames[1]).hasClass("active")){
                             that.addActiveEvent(classNames[1],"disabled");
-                         }               
+                         }
                     }else{
                         checkBoxs.removeAttr("checked","checked");
                         that.removeActiveEvent(classNames[0],"active");
@@ -137,11 +137,11 @@
             },
             //按钮添加class事件
             checkTagClass : function($that){
-                var parentsTransfer = $that.parents(".ty-transfer-list");
+                var parentsTransfer = $that.parents(".ty-transfer-list.jsp");
                     var tagClass = null;
                     var tagRemoveClass = null;
 
-                    if(parentsTransfer.hasClass("transfer-list-left")){
+                    if(parentsTransfer.hasClass("transfer-list.jsp-left")){
                         tagClass = "ty-transfer-btn-toright"
                         tagRemoveClass = "ty-transfer-btn-toleft";
                     }else{
@@ -177,12 +177,12 @@
 
 jQuery(document).ready(function($) {
 
-  
+
     /*
      * 自定义列的功能////////////////////////////////////////////////////////////////////////////////
      * */
 
-   
+
     /*
     * 按钮点击 start
     * */
@@ -198,7 +198,7 @@ jQuery(document).ready(function($) {
         /*if($(this).hasClass("main-btn-active")){
             $(this).css("background","#7AC7F8")
         }else if($(this).hasClass("secondary-btn-active")){
-        
+
         }*/
         //判断是否有自定义属性改变文本
         if($.type($(this).attr('data-text')) != "undefined")
@@ -208,8 +208,8 @@ jQuery(document).ready(function($) {
         }
     });
 
-    
-    
+
+
 
 });
 

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rbac.mapper.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.rbac.pojo.Employee">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+    <result column="islock" jdbcType="INTEGER" property="islock" />
+    <!--关联(维护)部门对象, 员工-部门关系: 多对一. 在多方中维护一方对象-->
+    <association property="department" javaType="com.rbac.pojo.Department" columnPrefix="d_">
+      <id property="id" column="id"/>
+      <result property="name" column="name"/>
+      <result property="sn" column="sn"/>
+    </association>
+
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from employee
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rbac.pojo.Employee" useGeneratedKeys="true">
+    insert into employee (id,name, password, salt,
+      phone, dept_id, islock
+      )
+    values (#{id,jdbcType=BIGINT},#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{deptId,jdbcType=INTEGER}, #{islock,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="update" parameterType="com.rbac.pojo.Employee">
+    update employee
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=INTEGER},
+      islock = #{islock,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, name, password, salt, phone, dept_id, islock
+    from employee
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select e.id, e.name, e.password, e.salt, e.phone, e.dept_id, e.islock,d.id d_id, d.name d_name, d.sn d_sn
+    from employee e LEFT JOIN department d ON e.dept_id=d.id
+  </select>
+
+  <!--根据字段查询数据-->
+  <select id="findByWord" resultMap="BaseResultMap" parameterType="Employee" >
+
+    SELECT
+      e.id, e.name, e.phone, e.dept_id,e.islock,
+      d.id d_id, d.name d_name, d.sn d_sn
+    FROM employee e
+    LEFT JOIN department d ON e.dept_id=d.id
+    WHERE (e.name LIKE '%' #{name} '%'
+    and e.dept_id = #{deptId} )
+    OR (e.phone like '%' #{name} '%'
+    and e.dept_id = #{deptId} )
+</select>
+
+  <!--根据字段查询数据-->
+  <select id="onlyFindByWord" resultMap="BaseResultMap" parameterType="Employee" >
+    SELECT
+    e.id, e.name, e.phone, e.dept_id,e.islock,
+    d.id d_id, d.name d_name, d.sn d_sn
+    FROM employee e
+    LEFT JOIN department d ON e.dept_id=d.id
+    WHERE e.name LIKE '%' #{name} '%'
+    OR e.phone like '%' #{name} '%'
+</select>
+
+  <!--删除部门后更新在部门的员工的dept_id-->
+  <update id="updateDeptId">
+        update employee set dept_id = null where dept_id = #{id};
+    </update>
+  <update id="updateLock">
+        update employee set islock = #{islock} where id = #{id};
+  </update>
+  <update id="updatePassword">
+        update employee set password = #{password},salt=#{salt} where id = #{id};
+  </update>
+  <select id="selectList" resultMap="BaseResultMap">
+    SELECT
+    e.*,
+    d.id d_id, d.name d_name, d.sn d_sn
+    FROM employee e
+    LEFT JOIN department d ON e.dept_id=d.id
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        AND (e.name LIKE concat('%',#{keyword},'%') OR e.phone LIKE concat('%',#{keyword},'%'))
+      </if>
+      <if test="deptId!=null and deptId!=-1">
+        AND e.dept_id=#{deptId}
+      </if>
+    </where>
+  </select>
+</mapper>

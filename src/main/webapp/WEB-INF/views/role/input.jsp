@@ -7,53 +7,44 @@
 </head>
 <body>
 
-<div class="container " style="margin-top: 20px">
+<div id="wrapper" >
     <%@include file="../common/top.jsp" %>
-    <div class="row">
-        <div class="col-sm-3">
-            <c:set var="menu" value="role"/>
-            <%@include file="../common/menu.jsp" %>
-        </div>
-        <div class="col-sm-9">
-            <div class="row">
-                <div class="col-sm-12">
-                    <c:if test="${param.id == null}">
-                        <h1 class="page-head-line">角色新增</h1>
-                    </c:if>
-                    <c:if test="${param.id != null}">
-                        <h1 class="page-head-line">角色修改</h1>
-                    </c:if>
-                </div>
-            </div>
-            <div class="row col-sm-10">
-                <form class="form-horizontal" action="/role/saveOrUpdate.do" method="post" id="editForm">
-                    <input type="hidden" name="id" value="${role.id}">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">角色名：</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name" value="${role.name}"
-                                   placeholder="请输入角色名">
-                        </div>
-                    </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">备注：</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" name="description" value="${role.description}"
-                                       placeholder="请输入备注(可为空)">
-                            </div>
-                        </div>
 
-                    <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-6">
-                            <button id="btn_submit" type="button" class="btn btn-success">
-                                <span class="glyphicon glyphicon-saved"></span> 保存
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+    <c:set var="menu" value="role"/>
+    <%@include file="../common/menu.jsp" %>
+    <main >
+        <c:if test="${param.id == null}">
+            <h1 >角色新增</h1>
+        </c:if>
+        <c:if test="${param.id != null}">
+            <h1>角色修改</h1>
+        </c:if>
+        <div style="width: 50%;margin: 35px auto">
+            <form class="form-horizontal" action="/role/saveOrUpdate.do" method="post" id="editForm">
+                <input type="hidden" name="id" value="${role.id}">
+                <div class="form-group">
+                    <label class="control-label">角色名：</label>
+                    <input type="text" class="form-control" name="name" value="${role.name}"
+                           placeholder="请输入角色名">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">备注：</label>
+                    <input type="text" class="form-control" name="description" value="${role.description}"
+                           placeholder="请输入备注(可为空)">
+                </div>
+
+                <div class="floatright">
+                    <button id="btn_submit" type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-saved"></span> 保存
+                    </button>
+                </div>
+            </form>
         </div>
-    </div>
+
+    </main>
+    <%@include file="../common/footer.jsp" %>
+
+
 </div>
 <script>
     /*初始化jQuery框架*/

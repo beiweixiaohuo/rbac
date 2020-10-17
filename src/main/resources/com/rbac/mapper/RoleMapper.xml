@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rbac.mapper.RoleMapper">
+
+  <resultMap id="BaseResultMap" type="com.rbac.pojo.Role">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+
+  <insert id="insert" parameterType="Role">
+         insert into role(name ,description) values(#{name},#{description})
+  </insert>
+
+  <update id="updateByPrimaryKey">
+        update role set name=#{name},description=#{description} where id=#{id}
+  </update>
+
+  <delete id="deleteByPrimaryKey">
+        delete from role where id=#{id}
+  </delete>
+
+  <select id="selectByPrimaryKey" resultType="com.rbac.pojo.Role">
+         select * from role where id=#{id}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+        select * from role
+  </select>
+
+
+</mapper>

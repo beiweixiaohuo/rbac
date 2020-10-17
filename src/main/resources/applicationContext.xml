@@ -14,7 +14,7 @@
       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--加载properties文件-->
-    <context:property-placeholder location="classpath:db.properties" system-properties-mode="NEVER"/>
+       <context:property-placeholder location="classpath:db.properties" system-properties-mode="NEVER"/>
 
     <!--配置数据源和连接池-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
@@ -30,20 +30,20 @@
         <!--1: 配置连接池-->
         <property name="dataSource" ref="dataSource"/>
         <!--2: 管理mapper.xml文件-->
-        <property name="mapperLocations" value="classpath:cn/wolfcode/rbac/mapper/*Mapper.xml"/>
+        <property name="mapperLocations" value="classpath:com/rbac/mapper/*Mapper.xml"/>
         <!--3: 配置别名-->
-        <property name="typeAliasesPackage" value="cn.wolfcode.rbac.domain"/>
+        <property name="typeAliasesPackage" value="com.rbac.pojo"/>
         <!--4: 配置个性化设置-->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
 
     <!--Mapper接口扫描器-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cn.wolfcode.rbac.mapper"/>
+        <property name="basePackage" value="com.rbac.mapper"/>
     </bean>
 
     <!--组件扫描器-->
-    <context:component-scan base-package="cn.wolfcode.rbac"/>
+    <context:component-scan base-package="com.rbac"/>
 
     <!--业务层的事务配置:3W-->
     <!--What: 做什么增强(事务增强)-->
@@ -63,9 +63,12 @@
     </tx:advice>
     <!--Where: 在哪里做事务增强(在service层所有的增删改查操作中做增强)-->
     <aop:config>
-        <aop:pointcut id="pointcut" expression="execution(* cn.wolfcode.rbac.service.impl.*ServiceImpl.*(..))"/>
+        <aop:pointcut id="pointcut" expression="execution(* com.rbac.service.impl.*ServiceImpl.*(..))"/>
         <!--连接Where和When-->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
+
+
+
 
 </beans>

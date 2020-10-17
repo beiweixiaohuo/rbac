@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rbac.mapper.BoardMapper">
+  <resultMap id="BaseResultMap" type="com.rbac.pojo.Board">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="context" jdbcType="VARCHAR" property="context" />
+    <result column="publisher" jdbcType="VARCHAR" property="publisher" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from board
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rbac.pojo.Board" useGeneratedKeys="true">
+    insert into board (title, context, publisher,
+      create_time, update_time, isdelete
+      )
+    values (#{title,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isdelete,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rbac.pojo.Board">
+    update board
+    set title = #{title,jdbcType=VARCHAR},
+      context = #{context,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      isdelete = #{isdelete,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteToRecycle" parameterType="com.rbac.pojo.Board">
+    update board set isdelete = 1 where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="recycleToPublish" parameterType="com.rbac.pojo.Board">
+    update board set isdelete = 0 where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, context, publisher, create_time, update_time, isdelete
+    from board
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectPublish" resultMap="BaseResultMap">
+    select id, title, context, publisher, create_time, update_time, isdelete
+    from board where isdelete = 0
+  </select>
+  <select id="selectRecycle" resultMap="BaseResultMap">
+    select id, title, context, publisher, create_time, update_time, isdelete
+    from board where isdelete = 1
+  </select>
+</mapper>

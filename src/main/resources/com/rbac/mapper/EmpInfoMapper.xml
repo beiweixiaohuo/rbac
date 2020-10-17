@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rbac.mapper.EmpInfoMapper">
+  <resultMap id="BaseResultMap" type="com.rbac.pojo.EmpInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="workID" jdbcType="CHAR" property="workid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="idCard" jdbcType="CHAR" property="idcard" />
+    <result column="wedlock" jdbcType="CHAR" property="wedlock" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="nativePlace" jdbcType="VARCHAR" property="nativeplace" />
+    <result column="politic" jdbcType="VARCHAR" property="politic" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="departmentId" jdbcType="INTEGER" property="departmentid" />
+    <result column="posId" jdbcType="INTEGER" property="posid" />
+    <result column="engageForm" jdbcType="VARCHAR" property="engageform" />
+    <result column="tiptopDegree" jdbcType="CHAR" property="tiptopdegree" />
+    <result column="specialty" jdbcType="VARCHAR" property="specialty" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="beginDate" jdbcType="DATE" property="begindate" />
+    <result column="workState" jdbcType="CHAR" property="workstate" />
+    <result column="conversionTime" jdbcType="DATE" property="conversiontime" />
+    <result column="notWorkDate" jdbcType="DATE" property="notworkdate" />
+    <result column="beginContract" jdbcType="DATE" property="begincontract" />
+    <result column="endContract" jdbcType="DATE" property="endcontract" />
+  </resultMap>
+  <delete id="deleteByWordID" parameterType="java.lang.String">
+    delete from emp_info
+    where workid = #{workid}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rbac.pojo.EmpInfo" useGeneratedKeys="true">
+    insert into emp_info (id,workID, name, phone, departmentId)
+    values (#{id,jdbcType=INTEGER},#{workid,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR},  #{departmentid,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rbac.pojo.EmpInfo">
+    update emp_info
+    set
+      name = #{name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      idCard = #{idcard,jdbcType=CHAR},
+      wedlock = #{wedlock,jdbcType=CHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      nativePlace = #{nativeplace,jdbcType=VARCHAR},
+      politic = #{politic,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      departmentId = #{departmentid,jdbcType=INTEGER},
+      posId = #{posid,jdbcType=INTEGER},
+      engageForm = #{engageform,jdbcType=VARCHAR},
+      tiptopDegree = #{tiptopdegree,jdbcType=CHAR},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      beginDate = #{begindate,jdbcType=DATE},
+      workState = #{workstate,jdbcType=CHAR},
+      conversionTime = #{conversiontime,jdbcType=DATE},
+      notWorkDate = #{notworkdate,jdbcType=DATE},
+      beginContract = #{begincontract,jdbcType=DATE},
+      endContract = #{endcontract,jdbcType=DATE}
+    where workID = #{workid}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, workID, name, gender, birthday, idCard, wedlock, nation, nativePlace,
+    politic, email, phone, address, departmentId, posId, engageForm, tiptopDegree, specialty,
+    school, beginDate, workState, conversionTime, notWorkDate, beginContract, endContract
+    from emp_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, workID, name, gender, birthday, idCard, wedlock, nation, nativePlace,
+    politic, email, phone, address, departmentId, posId, engageForm, tiptopDegree, specialty,
+    school, beginDate, workState, conversionTime, notWorkDate, beginContract, endContract
+    from emp_info
+  </select>
+  <select id="selectByWorkId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, name, gender, birthday, idCard, wedlock, nation, nativePlace, politic,
+    email, phone, address, departmentId, posId, engageForm, tiptopDegree, specialty,
+    school, beginDate, workState, workID, conversionTime, notWorkDate, beginContract,
+    endContract
+    from emp_info
+    where workID = #{workid}
+  </select>
+  <select id="selectWorkIDByEmail" resultType="java.lang.Integer">
+    select workID from emp_info where email=#{email};
+  </select>
+</mapper>
