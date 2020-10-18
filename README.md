@@ -2,7 +2,9 @@
 员工管理系统
 
 登录：http://localhost:8080/login.do
+
 需要先在spring-mail.xml中配置邮箱密码
+
 忘记密码功能需要开启redis
 
 
