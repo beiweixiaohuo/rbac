@@ -17,9 +17,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.qq.com" />
-        <property name="username" value="2801685997@qq.com" />
+        <property name="username" value="---邮箱---" />
         <!-- //你的邮箱 -->
-        <property name="password" value="szmcbpouejnqdceh" />
+        <property name="password" value="---密码---" />
         <!-- //邮箱密码 -->
         <property name="javaMailProperties">
             <props>
